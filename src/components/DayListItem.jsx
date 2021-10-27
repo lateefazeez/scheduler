@@ -20,6 +20,7 @@ const DayListItem = (props) => {
     }
   }
 
+
   return ( 
     <li className={dayClass} onClick={() => setDay(name)}>
       <h2 className="text--regular">{name}</h2>
