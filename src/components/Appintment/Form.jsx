@@ -6,7 +6,6 @@ import Button from "components/Button";
 const Form = (props) => {
   const [student, setStudent] = useState(props.student || "")
   const [interviewer, setInterviewer] = useState(props.interviewer || null)
-  // const { student, propInterviewer, interviewers, onSave, onCancel } = props
 
   const handleNameChange = (e) => {
     e.preventDefault()
