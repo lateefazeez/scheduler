@@ -18,7 +18,7 @@ const InterviewerList = (props) => {
              avatar={eachInterviewer.avatar}
              selected={eachInterviewer.id === value} 
              setInterviewer={() => onChange(eachInterviewer.id)}
-            />
+          />
         ))}
       </ul>
     </section>
