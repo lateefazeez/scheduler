@@ -14,6 +14,9 @@ import Appointment from "components/Appintment/index"
 import Header from "components/Appintment/Header"
 import Empty from "components/Appintment/Empty";
 import Show from "components/Appintment/Show";
+import Confirm from "components/Appintment/Confirm";
+import Status from "components/Appintment/Status";
+import Error from "components/Appintment/Error";
 
 storiesOf("Button", module)
   .addParameters({
@@ -154,6 +157,18 @@ storiesOf("Button", module)
                 onEdit={action("onEdit")}
                 onDelete={action("onDelete")} 
               /> ))
+            .add("Confirm", () => ( 
+              <Confirm
+                message={"Delete the appointment?"} 
+                onConfirm={action("onConfirm")}
+                onCancel={action("onCancel")}
+              />))
+            .add("Status", () => ( <Status message="Deleting" />))
+            .add("Error", () => ( 
+              <Error 
+                message="Could not delete appointment." 
+                onClose={action("onClose")} 
+              />))
                 
             
            
