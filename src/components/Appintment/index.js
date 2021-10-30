@@ -8,13 +8,13 @@ import "./styles.scss"
 const Appointment = (props) => {
   const { time, interview} = props
 
-  const displayAppointment = () => {
-    if (time) {
-      return `Appointment at ${time}`
-    } else {
-      return "No Appointments"
-    }
-  }
+  // const displayAppointment = () => {
+  //   if (time) {
+  //     return `Appointment at ${time}`
+  //   } else {
+  //     return "No Appointments"
+  //   }
+  // }
 
   return ( 
     <article time={time}  className="appointment">

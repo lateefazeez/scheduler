@@ -1,16 +1,24 @@
 
 export const getAppointmentsForDay = (state, day) => {
-  let finalArr = []
-  state.days.forEach(element => {
-    if (element.name === day) {
-      element.appointments.forEach(microElement => {
+  let appointmentsArray = []
+  state.days.forEach(dayItem => {
+    if (dayItem.name === day) {
+      dayItem.appointments.forEach(appointment => {
           for (let key in state.appointments) {
-            if (key == microElement) {
-              finalArr.push(state.appointments[key])
+            if (key == appointment) {
+              appointmentsArray.push(state.appointments[key])
             }
           }
     })
   }
   })
-  return finalArr
+  return appointmentsArray
+}
+
+export const getInterview = (state, interview) => {
+  let returnedInterview = {}
+  returnedInterview.student = interview.student;
+  returnedInterview.interviewer = state.interviewers[interview.interviewer]
+
+  return returnedInterview
 }
