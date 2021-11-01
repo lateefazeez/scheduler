@@ -8,7 +8,7 @@ import Form from "./Form"
 
 
 const Appointment = (props) => {
-  const { time, interview, interviewers } = props
+  const { time, interview, appointment, interviewers, bookInterview } = props
 
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
@@ -17,7 +17,16 @@ const Appointment = (props) => {
 
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY)
 
-
+  const save = (name, interviewer) => {
+    const interview = {
+      student: name,
+      interviewer
+    };
+    bookInterview(appointment.id, interview)
+    .then(() => {
+      transition(SHOW)
+    })
+  }
   return ( 
     <article time={time}  className="appointment">
       <Header time={time} />
@@ -32,7 +41,7 @@ const Appointment = (props) => {
       )}
       {mode === CREATE && <Form
         interviewers={interviewers}
-        onSave={() => console.log("Clicked onSave") }
+        onSave={save}
         onCancel={() => back(EMPTY) } /> }
     </article>
    );

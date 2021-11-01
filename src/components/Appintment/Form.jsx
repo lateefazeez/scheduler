@@ -4,8 +4,9 @@ import Button from "components/Button";
 
 
 const Form = (props) => {
-  const [student, setStudent] = useState(props.student || "")
-  const [interviewer, setInterviewer] = useState(props.interviewer || null)
+  const { interviewers, studentName, interviewerName, onSave, onCancel } = props
+  const [student, setStudent] = useState(studentName || "")
+  const [interviewer, setInterviewer] = useState(interviewerName || null)
 
   const handleNameChange = (e) => {
     e.preventDefault()
@@ -44,7 +45,7 @@ const Form = (props) => {
       <section className="appointment__card-right">
         <section className="appointment__actions">
           <Button danger onClick={cancel}>Cancel</Button>
-          <Button confirm onClick={props.onSave}>Save</Button>
+          <Button confirm onClick={() => onSave(student, interviewer)}>Save</Button>
         </section>
       </section>
     </main>
