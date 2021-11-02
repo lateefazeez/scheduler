@@ -10,6 +10,7 @@ const Form = (props) => {
 
   const handleNameChange = (e) => {
     e.preventDefault()
+    // Validate user
     setStudent(e.target.value)
   }
 
@@ -34,6 +35,7 @@ const Form = (props) => {
             placeholder="Enter Student Name"
             value={student}
             onChange={handleNameChange}
+            data-testid = "student-name-input"
           />
         </form>
         <InterviewerList

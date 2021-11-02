@@ -8,7 +8,6 @@ import Form from "./Form"
 import Status from "./Status"
 import Confirm from "./Confirm"
 import Error from "./Error"
-import { CYCLIC_KEY } from "@storybook/addon-actions/dist/constants"
 
 
 const Appointment = (props) => {
@@ -106,31 +105,3 @@ const Appointment = (props) => {
  
 export default Appointment;
 
-const judgeVegetable = function (vegetables, metric) {
-  vegetables.sort(function (a, b) {
-    // return a['metric'] - b['metric'];
-    return a[metric] - b[metric];
-  });
-  return vegetables[vegetables.length - 1].submitter;
-}
-const vegetables = [
-  {
-    submitter: 'Old Man Franklin',
-    redness: 10,
-    plumpness: 5
-  },
-  {
-    submitter: 'Sally Tomato-Grower',
-    redness: 2,
-    plumpness: 8
-  },
-  {
-    submitter: 'Hamid Hamidson',
-    redness: 4,
-    plumpness: 3
-  }
-]
-
-const metric = 'redness'
-
-console.log(judgeVegetable(vegetables, metric));
