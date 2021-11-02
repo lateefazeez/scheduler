@@ -38,3 +38,24 @@ export const getInterviewersForDay = (state, day) => {
   })
   return interviewersArray
 }
+
+export const getNumberOfSpots = (days, appointments, day) => {
+  let remainingSpots = 0
+  days.forEach((dayItem, index) => {
+    if (dayItem.name === day) {
+      dayItem.appointments.forEach(dayAppointment => {
+        for (const key in appointments) {
+          if (key == dayAppointment) {
+            if(appointments[key].interview === null) {
+              remainingSpots ++
+            }
+          }
+          
+        }
+      })
+      dayItem.spots = remainingSpots
+      // days[index] = dayItem
+    }
+  })
+  return days
+}
