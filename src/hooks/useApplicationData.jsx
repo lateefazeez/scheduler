@@ -1,19 +1,73 @@
-import { useState, useEffect} from "react"
+import { useEffect, useReducer} from "react"
 import axios from "axios"
-import { getNumberOfSpots } from "helpers/selectors"
 
 export default function useApplicationData () {
+  const SET_DAY = "SET_DAY"
+  const SET_APPLICATION_DATA = "SET_APPLICATION_DATA"
+  const SET_INTERVIEW = "SET_INTERVIEW"
 
-  const [state, setState] = useState({
+
+  function reducer(state, action) {
+    switch(action.type) {
+      case SET_DAY:
+        return { ...state, day: action.value}
+      
+      case SET_APPLICATION_DATA:
+        return { 
+          ...state, 
+          days: action.value.days, 
+          appointments: action.value.appointments, 
+          interviewers: action.value.interviewers
+        }
+          
+        case SET_INTERVIEW:
+        const appointment = {
+          ...state.appointments[action.id],
+          interview: action.interview && { ...action.interview }
+        }
+        const appointments = {
+          ...state.appointments, 
+          [action.id]: appointment
+        }
+        
+        function updateSpotsForDay(days, appointments, day) {
+          let spotsRemaining = 0;
+          days.forEach((element) => {
+            if (element.name === day) {
+              element.appointments.forEach((microElement) => {
+                for (let key in appointments) {
+                  if (key == microElement) {
+                    if (appointments[key].interview === null) {
+                      spotsRemaining++;
+                    }
+                  }
+                }
+              });
+            }
+          });
+          const newDays = state.days.map(day => day.name === state.day ? {...day,spots:spotsRemaining} : day)
+          return newDays
+        }
+        let spots = updateSpotsForDay(state.days, appointments, state.day)
+
+        return { ...state, appointments: appointments, days: spots}
+        
+
+      default:
+        throw new Error(
+          `Tried to reduce with unsupported action type: ${action.type}`
+        )
+    }
+  }
+
+  const [state, dispatch] = useReducer(reducer, {
     day: "Monday",
     days: [],
-    spots: 0,
     appointments: [],
     interviewers: []
-  })
+} )
 
-  const setDay = day => setState({ ...state, day})
-
+  const setDay = day => dispatch({ type: SET_DAY, value: day})
 
   useEffect(() => {
     const daysUrl = "/api/days"
@@ -25,49 +79,31 @@ export default function useApplicationData () {
 
     Promise.all([getDays, getAppointments, getInterviewers])
       .then(response => {
-        setState(prev => ({...prev, days: response[0].data, appointments: response[1].data, interviewers: response[2].data}))
+        dispatch({ 
+          type: SET_APPLICATION_DATA, 
+          value: {
+            days: response[0].data,
+            appointments: response[1].data,
+            interviewers: response[2].data }
+          })
       })
   }, []) 
 
   const bookInterview = (id, interview) => {
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    }
-    const appointments = {
-      ...state.appointments, 
-      [id]: appointment
-    }
 
     return axios.put(`api/appointments/${id}`, { interview })
       .then(() => {
-        let days = getNumberOfSpots(state.days, appointments, state.day)
-        setState({
-          ...state, 
-          appointments, days
-        })
-       
+        
+        dispatch({ type: SET_INTERVIEW, interview, id})
       })
   }
 
   const cancelInterview = (id) => {
 
-    const appointment = {
-      ...state.appointments[id],
-      interview: null
-    }
-
-    const appointments = {
-      ...state.appointments, 
-      [id]: appointment
-    }
-
-    return axios.delete(`api/appointments/${id}`, { interview: appointment.interview })
+    return axios.delete(`api/appointments/${id}`)
     .then(() => {
-      let days = getNumberOfSpots(state.days, appointments, state.day)
-      setState({
-        ...state, appointments, days
-      })
+      // let days = getNumberOfSpots(state.days, appointments, state.day)
+      dispatch({ type:SET_INTERVIEW, interview: null, id})
     })
   }
 
