@@ -53,6 +53,7 @@ const Form = (props) => {
           interviewers={props.interviewers} 
           onChange={setInterviewer}
           value={interviewer}
+          data-testid = "interviewer"
         />
       </section>
       <section className="appointment__card-right">
