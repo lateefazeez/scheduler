@@ -27,9 +27,9 @@ npm run storybook
 
 ## Final Product
 
-!["screenshot of Desktop View"](https://github.com/lateefazeez/tweeter/blob/master/docs/desktop-view.png?raw=true)
+!["Screenshot of App Main Page"](https://github.com/lateefazeez/scheduler/blob/master/docs/App%20Main%20page.png?raw=true)
 
-!["screenshot of a Mobile View Before Scrolling"](https://github.com/lateefazeez/tweeter/blob/master/docs/mobile-view-unscrolled.png?raw=true)
+!["Screenshot of creating an appointment"](https://github.com/lateefazeez/scheduler/blob/master/docs/Creating%20A%20new%20Appointment.png?raw=true)
 
-!["screenshot of a Mobile View when scrolled"](https://github.com/lateefazeez/tweeter/blob/master/docs/mobile-view-scrolled.png?raw=true)
+!["Screenshot of Deleting an appointment"](https://github.com/lateefazeez/scheduler/blob/master/docs/Deleting%20An%20Appointment.png?raw=true)
 
