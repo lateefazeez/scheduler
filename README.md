@@ -36,6 +36,7 @@ npm run storybook
 ## Dependencies
 
 - Express
+- Axios
 - Node 5.10.x or above
 - React 16.4.x or above
 - Node-Sass
