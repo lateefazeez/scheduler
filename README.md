@@ -33,3 +33,12 @@ npm run storybook
 
 !["Screenshot of Deleting an appointment"](https://github.com/lateefazeez/scheduler/blob/master/docs/Deleting%20An%20Appointment.png?raw=true)
 
+## Dependencies
+
+- Express
+- Node 5.10.x or above
+- React 16.4.x or above
+- Node-Sass
+- React Testing Library
+- Storybook Testing App
+- Cypress
