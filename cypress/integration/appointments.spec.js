@@ -1,5 +1,3 @@
-const { CYCLIC_KEY } = require("@storybook/addon-actions/dist/constants")
-
 
 describe("Appointments", () => {
   beforeEach(function() {
