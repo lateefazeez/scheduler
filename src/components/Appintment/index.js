@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import Empty from "./Empty"
 import Header from "./Header"
 import Show from "./Show"
@@ -52,6 +52,15 @@ const Appointment = (props) => {
       })
   }
 
+  useEffect(() => {
+    if (mode === EMPTY && interview) {
+      transition(SHOW)
+    }
+    if (mode === SHOW && interview === null) {
+      transition(EMPTY)
+    }
+  }, [mode, interview, transition])
+
   const confirm = () => {
     transition(CONFIRM)
   }
@@ -60,7 +69,7 @@ const Appointment = (props) => {
     <article time={time}  className="appointment">
       <Header time={time} />
       { mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
-      { mode === SHOW && (
+      { mode === SHOW && interview &&(
        <Show 
           student={interview.student} 
           interviewer={interview.interviewer.name}

@@ -73,6 +73,7 @@ export default function useApplicationData () {
     const daysUrl = "/api/days"
     const appointmentsUrl = "/api/appointments"
     const interviewersUrl = "/api/interviewers"
+
     const getDays = axios.get(daysUrl)
     const getAppointments = axios.get(appointmentsUrl)
     const getInterviewers = axios.get(interviewersUrl)
@@ -87,13 +88,30 @@ export default function useApplicationData () {
             interviewers: response[2].data }
           })
       })
+
+      const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL)
+
+      webSocket.onopen = function (event) {
+        webSocket.send("ping")
+      }
+
+      webSocket.onmessage = function(event) {
+        const data = JSON.parse(event.data)
+
+        if (typeof data === 'object' && data.type === "SET_INTERVIEW") {
+          dispatch({ type: SET_INTERVIEW, interview: data.interview, id: data.id})
+        }
+      }
+
+      return () => {
+        webSocket.close()
+      }
   }, []) 
 
   const bookInterview = (id, interview) => {
 
     return axios.put(`api/appointments/${id}`, { interview })
       .then(() => {
-        
         dispatch({ type: SET_INTERVIEW, interview, id})
       })
   }
@@ -103,7 +121,7 @@ export default function useApplicationData () {
     return axios.delete(`api/appointments/${id}`)
     .then(() => {
       // let days = getNumberOfSpots(state.days, appointments, state.day)
-      dispatch({ type:SET_INTERVIEW, interview: null, id})
+      dispatch({ type: SET_INTERVIEW, interview: null, id})
     })
   }
 
