@@ -7,6 +7,10 @@ This project is built with react in the front-end and node with express in the b
 
 Install dependencies with `npm install`.
 
+## Back-end
+
+Check for the back-end configuration [a here](https://github.com/lateefazeez/scheduler-api)
+
 ## Running Webpack Development Server
 
 ```sh
